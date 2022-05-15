@@ -1,14 +1,17 @@
-export function allBaybies(){
+export function getIdentities(){
     debugger
-    fetch(`http://localhost:3015/baby`)
+  return fetch(`http://localhost:3016/baby`)
         .then(response => {
             if (response.ok && response.status == 200)
                 return response.json();
         })
         .then(data => {
             if (data) {
-                 alert(JSON.parse(data));
-                 return JSON.parse(data);
+                 console.log(data,"data in api baby");
+                //  data.forEach(b => {
+                     
+                //  });
+                 return data;
             }
             else {
                 alert("you need to application")
@@ -16,5 +19,4 @@ export function allBaybies(){
         }).catch((err)=>{
             console.log(err);
         })
-
 };
