@@ -31,8 +31,10 @@ export function logIn(userName, password) {
         })
 };
 
-export function Register(firstName, lastName, userName, password, email, phonNumber) {
-    fetch('http://localhost:3016/nurse', {
+
+
+export function Register(firstName,lastName,userName,password,email,phonNumber) {
+    fetch('http://localhost:3015/nurse', {
         headers: {
             'Content-Type': 'application/json',
         },
