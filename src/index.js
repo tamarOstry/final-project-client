@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../src/components/login'
 import SearchBaby from '../src/components/searchBaby';
-import Eating from '../src/components/eating';
 import Care from '../src/components/care';
-
 import HistoryCare from '../src/components/historyCare'
 import { BrowserRouter, Route } from 'react-router-dom';
+
 ReactDOM.render(
   <React.StrictMode>
     {/* <Provider></Provider> */}
@@ -15,10 +14,8 @@ ReactDOM.render(
       <Route path='/searchBaby' component={SearchBaby} />
       <Route path='/historyCare' component={HistoryCare} />
       <Route path='/care' component={Care} />
-      <Route path='/eating' component={Eating} />
     </BrowserRouter>
   </React.StrictMode>,
-  // <LoginForm />
   document.getElementById('root')
 );
 
