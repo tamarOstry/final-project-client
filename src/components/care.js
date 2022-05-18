@@ -117,7 +117,7 @@ export default function Care() {
 
   function compliteDetails(com) {
     debugger
-    history.push('./eating')
+    history.push(`/${com}`)
   }
 
   return (

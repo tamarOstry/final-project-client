@@ -6,7 +6,7 @@ export function saveEating(type,ammount){
         },
         method: 'POST',
         body: JSON.stringify({
-            type:'MOTHER_MILK',
+            type:type,
             ammount:ammount
         }),
     })

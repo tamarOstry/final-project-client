@@ -105,17 +105,14 @@ export default function CustomizedDialogs() {
           </Typography>
           <FormControl dir='rtl'>
             <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" >
-              <FormControlLabel value="חלב אם" control={<Radio />} label="חלב אם" name='MILK'
-                onClick={(e, value) => {
-                  console.log(value);
-                  if (value == true) {
-                    setType("MOTHER_MILK");
-                    console.log(type)
-                  }
-                }} />
-              <FormControlLabel value="מטרנה" control={<Radio />} label="מטרנה" name='MILK' />
-              <FormControlLabel value="סימילאק" control={<Radio />} label="סימילאק" name='MILK' />
-              <FormControlLabel value="נוטרימיגן" control={<Radio />} label="נוטרימיגן" name='MILK' />
+              <FormControlLabel value="חלב אם" control={<Radio />} label="חלב אם" 
+                  onClick={e => e.target.checked?setType("MOTHER_MILK"):""}/>
+              <FormControlLabel value="מטרנה" control={<Radio />} label="מטרנה"
+                onClick={e => e.target.checked?setType("MATERNA"):""}/> 
+              <FormControlLabel value="סימילאק" control={<Radio />} label="סימילאק" 
+                  onClick={e => e.target.checked?setType("SIMILAC"):""}/>
+              <FormControlLabel value="נוטרימיגן" control={<Radio />} label="נוטרימיגן" 
+                  onClick={e => e.target.checked?setType("NUTRIMIGEN"):""}/>
             </RadioGroup>
           </FormControl>
           <Typography gutterBottom dir='rtl'>

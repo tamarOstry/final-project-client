@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -9,8 +9,12 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import {useHistory} from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import { saveEating } from '../api/care'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -51,49 +55,75 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs() {
-  const [open, setOpen] = React.useState(true);
-  const history=useHistory();
+  const [open, setOpen] = useState(true);
+  const [type, setType] = useState("");
+  const [ammount, setAmmount] = useState("");
 
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
+  const history = useHistory();
+
+  //   const handleClickOpen = () => {
+  //     setOpen(true);
+  //   };
   const handleClose = () => {
     setOpen(false);
     history.push('./care')
+  };
 
+  const handleSave = async () => {
+    //const radioButtons = document.querySelectorAll('FormControlLabel[name="MILK"]'); 
+    // if(document.getElementById('milk').checked)
+    //    setType('MILK');
+    // for (const radioButton of radioButtons) {
+    //      if (radioButton.checked) {
+    //         setType(radioButton.value);
+    //         console.log(type);
+    //         break;
+    //        }
+    //  }
+    setOpen(false);
+    debugger
+    await saveEating(type, ammount);
+    history.push('./care')
   };
 
   return (
-    <div>
+    <div >
       {/* <Button variant="outlined" onClick={handleClickOpen}>
         Open dialog
       </Button> */}
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={() => handleClose()}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           החתלה
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+        {/* <DialogContent dividers>
+          <Typography gutterBottom dir='rtl'>
+            בחרי סוג מנה:
           </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          <FormControl dir='rtl'>
+            <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" >
+              <FormControlLabel value="חלב אם" control={<Radio />} label="חלב אם" 
+                  onClick={e => e.target.checked?setType("MOTHER_MILK"):""}/>
+              <FormControlLabel value="מטרנה" control={<Radio />} label="מטרנה"
+                onClick={e => e.target.checked?setType("MATERNA"):""}/> 
+              <FormControlLabel value="סימילאק" control={<Radio />} label="סימילאק" 
+                  onClick={e => e.target.checked?setType("SIMILAC"):""}/>
+              <FormControlLabel value="נוטרימיגן" control={<Radio />} label="נוטרימיגן" 
+                  onClick={e => e.target.checked?setType("NUTRIMIGEN"):""}/>
+            </RadioGroup>
+          </FormControl>
+          <Typography gutterBottom dir='rtl'>
+            כמות:
           </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
-          </Typography>
-        </DialogContent>
+          <div dir='rtl' className="form-outline">
+            <input type="number" min={0} max={300} id="typeNumber" className="form-control" onChange={(q) => setAmmount(q.target.value)} />
+          </div>
+        </DialogContent> */}
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button onClick={() => handleSave()}>
             Save changes
           </Button>
         </DialogActions>
