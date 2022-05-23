@@ -1,4 +1,3 @@
-.Dialog{
-    display: flex;
-    justify-content: space-around;
+.image{
+    background-image: url(../images/A.jpg);
 }

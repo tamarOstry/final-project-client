@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { tabsClasses } from '@mui/material/Tabs';
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 function LinkTab(props) {
   return (
@@ -17,7 +19,8 @@ function LinkTab(props) {
 }
 
 export default function NavTabs() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+	const history = useHistory();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -32,9 +35,9 @@ export default function NavTabs() {
         '&.Mui-disabled': { opacity: 0.3 },
       },
     }}>
-        <LinkTab label="חיפוש תינוק" href="/searchBaby" />
-        <LinkTab label="היסטוריה" href="/historyCare" />
-        <LinkTab label="טיפול" href="/care" />
+        <LinkTab label="חיפוש תינוק"  onClick={()=>history.push('/searchBaby')} />
+        <LinkTab label="היסטוריה" onClick={()=>history.push('/historyCare')}  />
+        <LinkTab label="טיפול" onClick={()=>history.push('/care')} />
       </Tabs>
     </Box>
   );

@@ -15,12 +15,10 @@ export default function LoginForm() {
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
 	const [phonNumber, setPhoneNumber] = useState("");
-	const [nurse, setNurse] = useState("");
 
 
 	async function onLogIn() {
-		const nurse = await logIn(userName, password).then(data => {
-			console.log(data, "data");
+		await logIn(userName, password).then(data => {
 			if (data) {
 				alert("התחברת בהצלחה")
 				history.push("/searchBaby");
@@ -35,7 +33,9 @@ export default function LoginForm() {
 	}
 
 	async function onRegister() {
-		const nurse = await Register(firstName, lastName, userName, password, email, phonNumber);
+		await Register(firstName, lastName, userName, password, email, phonNumber).then(()=>{
+			window.location.reload();
+		})
 	}
 
 	return (
@@ -101,7 +101,6 @@ export default function LoginForm() {
 				</div>
 			</div>
 		</div>
-
 	)
 }
 

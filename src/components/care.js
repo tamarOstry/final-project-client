@@ -18,76 +18,53 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { saveEating } from '../api/care';
+import { saveEating,saveDiaper,saveShower,saveFever,saveJaundice,saveLengthWeight} from '../api/care';
 import '../css/dialog.css';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 
-const marks = [
-  {
-      value: 30,
-      label: '30°C',
-  },
-  {
-    value: 33,
-    label: '30°C',
-  },
-  {
-    value: 20,
-    label: '20°C',
-  },
-  {
-    value: 37,
-    label: '37°C',
-  },
-  {
-    value: 40,
-    label: '40',
-  },
-];
 
 function valuetext(value) {
   return `${value}°C`;
 }
 
-
 const images = [
   {
-    url: '../images/A.jpg',
+    url: 'C:/Users/user/Documents/לימודים/יד/מחצית ב/פרויקט גמר/Client/src/images/A.jpg',
     title: 'האכלה',
     width: '40%',
     components: 'eating',
   },
   {
-    url: '../images/A.jpg',
+    url: 'C:/Users/user/Documents/לימודים/יד/מחצית ב/פרויקט גמר/Client/src/images/p.jpg',
     title: 'החתלה',
     width: '30%',
     components: 'diaper',
 
   },
   {
-    url: '../images/A.jpg',
+    url: 'C:/Users/user/Documents/לימודים/יד/מחצית ב/פרויקט גמר/Client/src/images/A.jpg',
     title: 'רחצה',
     width: '30%',
     components: 'shower',
   },
   {
-    url: '../images/A.jpg',
+    url: 'C:/Users/user/Documents/לימודים/יד/מחצית ב/פרויקט גמר/Client/src/images/A.jpg',
     title: 'חום',
     width: '30%',
     components: 'fever',
   },
   {
-    url: '../images/A.jpg',
+    url: 'C:/Users/user/Documents/לימודים/יד/מחצית ב/פרויקט גמר/Client/src/images/A.jpg',
     title: 'צהבת',
     width: '30%',
     components: 'jaundice',
 
   },
   {
-    url: '../images/A.jpg',
+    url: 'C:/Users/user/Documents/לימודים/יד/מחצית ב/פרויקט גמר/Client/src/images/A.jpg',
     title: 'גובה ומשקל',
     width: '30%',
     components: 'LengthWeight'
@@ -203,8 +180,18 @@ export default function Care() {
   const [openFever, setOpenFever] = useState(false);
   const [openJaundice, setOpenJaundice] = useState(false);
   const [openLengthWeight, setOpenLengthWeight] = useState(false);
-  const [type, setType] = useState("");
-  const [ammount, setAmmount] = useState("");
+
+  const [typeEating, setTypeEating] = useState("");
+  const [ammountEating, setAmmountEating] = useState("");
+  const [big, setBig] = useState(false);
+  const [small, setSmall] = useState(false);
+  const [ifShower, setIfShower] = useState(false);
+  const [dateShower,setDateShower]=useState(new Date)
+  const [fever, setFever] = useState(0);
+  const [jaundice, setJaundice] = useState(0);
+  const [length, setLength] = useState(0);
+  const [weight, setWeight] = useState(0);
+
   const history = useHistory();
 
     const handleClickOpen = (component) => {
@@ -232,22 +219,49 @@ export default function Care() {
       default:
         break;
     }
-    history.push('./care')
   };
 
   const handleSave = async (component) => {
     switch (component) {
-      case "eating":setOpenEating(false);break;
-      case "diaper":setOpenDiaper(false);break;
-      case "shower":setOpenShower(false);break;
-      case "fever":setOpenFever(false);break;
-      case "jaundice":setOpenJaundice(false);break;
-      case "LengthWeight":setOpenLengthWeight(false);break;
+      case "eating":{
+        setOpenEating(false);
+        {console.log(typeEating,ammountEating, "typeEating,ammountEating")}
+        await saveEating(typeEating, ammountEating);
+        break;
+      }
+      case "diaper":{
+        setOpenDiaper(false);
+        {console.log(big,small, "big,small")}
+        await saveDiaper(big,small);
+        break;
+      }
+      case "shower":{
+        setOpenShower(false);
+        {console.log(ifShower,dateShower, "ifShower,dateShower")}
+        await saveShower(ifShower,dateShower);
+        break;
+      }
+      case "fever":{
+        setOpenFever(false);
+        {console.log(fever, "fever")}
+        await saveFever(fever);
+        break;
+      }
+      case "jaundice":{
+        setOpenJaundice(false);
+        {console.log(jaundice, "jaundice")}
+        await saveJaundice(jaundice);
+        break;
+      }
+      case "LengthWeight":{
+        setOpenLengthWeight(false);
+        {console.log(length,weight, "length,weight")}
+        await saveLengthWeight(length,weight);
+        break;
+      }
       default:
         break;
     }
-    await saveEating(type, ammount);
-    history.push('./care')
   };
 
   return (
@@ -263,7 +277,7 @@ export default function Care() {
             }}
             onClick={() => handleClickOpen(image.components)}
           >
-            <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+            <ImageSrc className="image"  style={{ backgroundImage: `url(${image.url})` }}/>
             <ImageBackdrop className="MuiImageBackdrop-root" />
             <Image>
               <Typography
@@ -303,20 +317,20 @@ export default function Care() {
           <FormControl dir='rtl'>
             <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" >
               <FormControlLabel value="חלב אם" control={<Radio />} label="חלב אם" 
-                  onClick={e => e.target.checked?setType("MOTHER_MILK"):""}/>
+                  onClick={e => e.target.checked?setTypeEating("MOTHER_MILK"):""}/>
               <FormControlLabel value="מטרנה" control={<Radio />} label="מטרנה"
-                onClick={e => e.target.checked?setType("MATERNA"):""}/> 
+                onClick={e => e.target.checked?setTypeEating("MATERNA"):""}/> 
               <FormControlLabel value="סימילאק" control={<Radio />} label="סימילאק" 
-                  onClick={e => e.target.checked?setType("SIMILAC"):""}/>
+                  onClick={e => e.target.checked?setTypeEating("SIMILAC"):""}/>
               <FormControlLabel value="נוטרימיגן" control={<Radio />} label="נוטרימיגן" 
-                  onClick={e => e.target.checked?setType("NUTRIMIGEN"):""}/>
+                  onClick={e => e.target.checked?setTypeEating("NUTRIMIGEN"):""}/>
             </RadioGroup>
           </FormControl>
           <Typography gutterBottom dir='rtl'>
             כמות:
           </Typography>
           <div dir='rtl' className="form-outline">
-            <input type="number" min={0} max={300} id="typeNumber" className="form-control" onChange={(q) => setAmmount(q.target.value)} />
+            <input type="number" min={0} max={300} id="typeNumber" className="form-control" onChange={(q) => setAmmountEating(q.target.value)} />
             {/* <label class="form-label" for="typeNumber">Number input</label> */}
           </div>
         </DialogContent>
@@ -340,18 +354,11 @@ export default function Care() {
         <BootstrapDialogTitle id="customized-dialog-title" onClose={()=>handleClose('diaper')}>
           החתלה
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom dir='rtl'>
-            בחרי סוג מנה:
-          </Typography>
-          <FormControl dir='rtl'>
-            <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" >
-              <FormControlLabel value="גדול" control={<Radio />} label="גדול" 
-                  onClick={e => e.target.checked?setType("BIG"):""}/>
-              <FormControlLabel value="קטן" control={<Radio />} label="קטן"
-                onClick={e => e.target.checked?setType("SMALL"):""}/> 
-            </RadioGroup>
-          </FormControl>
+        <DialogContent dividers dir="rtl">
+          <label className="form-label" >גדול</label>
+          <Checkbox onClick={e => e.target.checked?setBig(true):setBig(false)} />
+          <label className="form-label" >קטן</label>
+          <Checkbox onClick={e => e.target.checked?setSmall(true):setBig(false)}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => handleSave('diaper')}>
@@ -360,7 +367,6 @@ export default function Care() {
         </DialogActions>
       </BootstrapDialog>
     </div>
-  );
 
      
   {/* shower */}
@@ -377,7 +383,7 @@ export default function Care() {
         <DialogContent dividers className='Dialog'>
           <FormControl dir='rtl'>
               <label>נעשתה רחצה</label>
-              <Checkbox defaultChecked/>
+              <Checkbox onClick={e => e.target.checked?setIfShower(true):setIfShower(false)}/>
           <Stack component="form" noValidate spacing={3}>
              <TextField
                 id="datetime-local"
@@ -388,6 +394,7 @@ export default function Care() {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={e => setDateShower(e.target.value)}
             />
           </Stack>
           </FormControl>
@@ -408,18 +415,21 @@ export default function Care() {
         aria-labelledby="customized-dialog-title"
         open={openFever}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={()=>handleClose('fever')}>
           חום
         </BootstrapDialogTitle>
            <Box sx={{ width: 300 }}>
-               <Slider
-                 aria-label="Always visible"
-                 defaultValue={80}
-                 getAriaValueText={valuetext}
-                 step={10}
-                 marks={marks}
-                 valueLabelDisplay="on"
-               />
+             <Slider
+                aria-label="Small steps"
+                defaultValue={38.000000}
+                getAriaValueText={valuetext}
+                step={0.1}
+                marks
+                min={33.00000000}
+                max={43.00000000}
+                valueLabelDisplay="auto"
+                onChange={e=>setFever(e.target.value)}
+             />
            </Box>
         <DialogActions>
           <Button onClick={() => handleSave('fever')}>
@@ -433,11 +443,11 @@ export default function Care() {
 
   <div className='Dialog'>
       <BootstrapDialog
-        onClose={() => handleClose('jaundice')}
+        onClose={() => handleClose}
         aria-labelledby="customized-dialog-title"
         open={openJaundice}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={()=>handleClose('jaundice')}>
           צהבת
         </BootstrapDialogTitle>
           
@@ -458,7 +468,7 @@ export default function Care() {
         aria-labelledby="customized-dialog-title"
         open={openLengthWeight}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={()=>handleClose('LengthWeight')}>
           גובה ומשקל
         </BootstrapDialogTitle>
         <Box
@@ -478,6 +488,7 @@ export default function Care() {
             shrink: true,
           }}
           variant="standard"
+          onChange={e => setLength(e.target.value)}
         />
         <div>משקל:</div>
         <TextField
@@ -488,6 +499,8 @@ export default function Care() {
             shrink: true,
           }}
           variant="standard"
+          onChange={e => setWeight(e.target.value)}
+
         />
         <DialogActions>
           <Button onClick={() => handleSave('LengthWeight')}>

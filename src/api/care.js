@@ -16,3 +16,23 @@ export function saveEating(type,ammount){
                 alert('save eating');
         });
 }
+
+export function saveDiaper(big,small){
+
+}
+
+export function saveShower(ifShower,dateShower){
+
+}
+
+export function saveFever(fever){
+
+}
+
+export function saveJaundice(jaundice){
+
+}
+
+export function saveLengthWeight(length,weight){
+
+}

@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import LoginForm from '../src/components/login'
 import SearchBaby from '../src/components/searchBaby';
 import Care from '../src/components/care';
-import HistoryCare from '../src/components/historyCare'
+import HistoryCare from '../src/components/historyCare';
 import { BrowserRouter, Route } from 'react-router-dom';
+import {Provider} from 'react-redux'
+
 
 ReactDOM.render(
   <React.StrictMode>
