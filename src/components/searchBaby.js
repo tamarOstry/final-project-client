@@ -19,7 +19,7 @@ export default function SearchBaby() {
   const [identitiesNumbers, setIdentitiesNumbers] = useState([]);
   const [choosedBaby, setChoosedBaby] = useState("");
   const [open, setOpen] = useState(false);
-  const [nurse,setNurse]=useState(JSON.parse(sessionStorage.getItem('nurse')).firstName);
+  // const [nurse,setNurse]=useState(JSON.parse(sessionStorage.getItem('nurse')).firstName);
 
   useEffect(() => {
     getIdentities().then(data => {
@@ -64,7 +64,7 @@ export default function SearchBaby() {
 
   return (
     <div className='searchInput'>
-      <h2>hi {nurse}</h2>
+      {/* <h2>hi {nurse}</h2> */}
       <Autocomplete
         disablePortal
         id="combo-box-demo"
